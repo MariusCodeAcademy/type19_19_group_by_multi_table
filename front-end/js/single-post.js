@@ -2,7 +2,14 @@
 'use strict';
 console.log('single-post.js file was loaded');
 
-const postId = 8;
+// get postId from query search
+// http://127.0.0.1:5500/front-end/single-post.html?postId=5
+const postId = new URLSearchParams(window.location.search).get('postId');
+
+// const postId = 4;
+if (!postId) {
+  alert('nera post id');
+}
 const postUrl = 'http://localhost:3000/api/posts';
 const commentUrl = 'http://localhost:3000/api/comments/post';
 
