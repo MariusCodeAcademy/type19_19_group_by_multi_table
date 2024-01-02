@@ -18,15 +18,25 @@ console.log('els ===', els);
   console.log('error ===', error);
 
   console.log('currentPostObj ===', currentPostObj);
+  // surasyti reiksmes
+  fillPostDataHtml(currentPostObj);
+  // parsiusti komentarus skirtus tam postui (getDataFetch)
+
+  // jei yra komentaru tada rodyti comentaru bloka (id="comments-list-block")
+
+  // komentaru bloke sugeneruoti komentarus is gautos informacijos
 })();
 
 // supildyti html reiksmes su post informacija
-
-// parsiusti komentarus skirtus tam postui
-
-// jei yra komentaru tada rodyti comentaru bloka
-
-// komentaru bloke sugeneruoti komentarus
+function fillPostDataHtml(postObj) {
+  els.title.textContent = postObj.title;
+  els.author.textContent = postObj.author;
+  els.content.textContent = postObj.body;
+  const formatedDate = new Date(postObj.date).toLocaleDateString('lt-LT', {
+    dateStyle: 'long',
+  });
+  els.date.textContent = formatedDate;
+}
 
 // helper fetch fn
 
