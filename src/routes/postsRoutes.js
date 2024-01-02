@@ -24,7 +24,16 @@ postRouter.get('/posts/:postId', async (req, res) => {
 
 // GET /api/posts - grazina visus postus
 postRouter.get('/posts', async (req, res) => {
-  res.json('grazina visus postus');
+  const sql = 'SELECT * FROM posts';
+  const [rows, error] = await dbQueryWithData(sql);
+
+  console.log('error ===', error);
+
+  if (rows?.length > 0) {
+    res.json(rows);
+    return;
+  }
+  res.status(500).json(rows);
 });
 
 module.exports = postRouter;
