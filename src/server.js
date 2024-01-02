@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 // ROUTES
 
-app.use('/', postRouter);
+app.use('/api', postRouter);
 
 // testConnection();
 // connect
