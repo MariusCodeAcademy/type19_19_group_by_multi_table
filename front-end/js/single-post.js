@@ -4,12 +4,15 @@ console.log('single-post.js file was loaded');
 
 const postId = 8;
 const postUrl = 'http://localhost:3000/api/posts';
+const commentUrl = 'http://localhost:3000/api/comments/post';
 
 const els = {
   title: document.getElementById('title'),
   author: document.getElementById('author'),
   date: document.getElementById('date'),
   content: document.getElementById('content'),
+  commentBlock: document.getElementById('comments-list-block'),
+  commentsList: document.getElementById('comments-list-el'),
 };
 console.log('els ===', els);
 // parsiusti posta kurio id yra postId
@@ -21,10 +24,23 @@ console.log('els ===', els);
   // surasyti reiksmes
   fillPostDataHtml(currentPostObj);
   // parsiusti komentarus skirtus tam postui (getDataFetch)
-
+  const [commentsArr, commError] = await getDataFetch(
+    `${commentUrl}/${postId}`
+  );
+  console.log('commentsArr ===', commError);
+  console.log('commentsArr ===', commentsArr);
   // jei yra komentaru tada rodyti comentaru bloka (id="comments-list-block")
-
+  if (commentsArr.length === 0) {
+    return;
+  }
+  els.commentBlock.classList.remove('d-none');
   // komentaru bloke sugeneruoti komentarus is gautos informacijos
+  commentsArr.forEach((oneCommObj) => {
+    // pagaminti el
+    const commEl = makeOneCommentEl(oneCommObj);
+    // ideti i sarasa
+    els.commentsList.append(commEl);
+  });
 })();
 
 // supildyti html reiksmes su post informacija
@@ -36,6 +52,34 @@ function fillPostDataHtml(postObj) {
     dateStyle: 'long',
   });
   els.date.textContent = formatedDate;
+}
+
+/*
+<li class="col-md-6">
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Author</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Date</h6>
+      <p class="card-text">Comment</p>
+    </div>
+  </div>
+</li>
+*/
+
+// make One comment html el
+function makeOneCommentEl(commObj) {
+  const liEl = document.createElement('li');
+  liEl.classList.add('col-md-6');
+  liEl.innerHTML = `
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Author</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Date</h6>
+      <p class="card-text">Comment</p>
+    </div>
+  </div>
+  `;
+  return liEl;
 }
 
 // helper fetch fn
