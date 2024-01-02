@@ -31,6 +31,7 @@ postRouter.get('/posts', async (req, res) => {
   LEFT JOIN post_comments
   ON posts.post_id=post_comments.post_id
   GROUP BY posts.title
+  ORDER BY posts.post_id
   `;
   const [rows, error] = await dbQueryWithData(sql);
 
