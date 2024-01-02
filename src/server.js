@@ -5,6 +5,7 @@ const cors = require('cors');
 const mysql = require('mysql2/promise');
 const { dbConfig } = require('./config');
 const postRouter = require('./routes/postsRoutes');
+const commentsRouter = require('./routes/commentsRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 // ROUTES
 
 app.use('/api', postRouter);
+app.use('/api', commentsRouter);
 
 // testConnection();
 // connect
