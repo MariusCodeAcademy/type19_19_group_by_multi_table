@@ -24,7 +24,14 @@ postRouter.get('/posts/:postId', async (req, res) => {
 
 // GET /api/posts - grazina visus postus
 postRouter.get('/posts', async (req, res) => {
-  const sql = 'SELECT * FROM posts';
+  // const sql = 'SELECT * FROM posts';
+  const sql = `
+  SELECT posts.post_id, posts.title, posts.author, posts.date, posts.body, COUNT(post_comments.comm_id) AS comment_count
+  FROM posts
+  LEFT JOIN post_comments
+  ON posts.post_id=post_comments.post_id
+  GROUP BY posts.title
+  `;
   const [rows, error] = await dbQueryWithData(sql);
 
   console.log('error ===', error);

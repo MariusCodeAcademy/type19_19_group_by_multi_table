@@ -21,15 +21,18 @@ const postsList = document.getElementById('posts-list');
 // sugeneruoti juos htmle
 
 function makeSinglePost(pObj) {
+  console.log('pObj ===', pObj);
   const liEl = document.createElement('li');
   liEl.className = 'col-md-6 col-lg-4';
   liEl.innerHTML = `
   <div class="card mb-3">
     <div class="card-body">
-      <h5 class="card-title">Title</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Date</h6>
-      <p class="card-text">autorius</p>
-      <a href="#" class="btn btn-primary">Read more</a>
+      <h5 class="card-title">${pObj.title}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">${pObj.date.split('T')[0]}</h6>
+      <p class="card-text">${pObj.author}</p>
+      <a href="single-post.html?postId=${
+        pObj.post_id
+      }" class="btn btn-primary">Read more</a>
     </div>
     <div class="card-footer">
       <p class="lead mb-0">Comments: 6</p>
