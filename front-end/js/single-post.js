@@ -34,6 +34,7 @@ console.log('els ===', els);
     return;
   }
   els.commentBlock.classList.remove('d-none');
+  els.commentsList.innerHTML = '';
   // komentaru bloke sugeneruoti komentarus is gautos informacijos
   commentsArr.forEach((oneCommObj) => {
     // pagaminti el
@@ -68,14 +69,17 @@ function fillPostDataHtml(postObj) {
 
 // make One comment html el
 function makeOneCommentEl(commObj) {
+  console.log('commObj ===', commObj);
   const liEl = document.createElement('li');
   liEl.classList.add('col-md-6');
   liEl.innerHTML = `
   <div class="card mb-3">
     <div class="card-body">
-      <h5 class="card-title">Author</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Date</h6>
-      <p class="card-text">Comment</p>
+      <h5 class="card-title">${commObj.author}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">${
+        commObj.created_at.split('T')[0]
+      }</h6>
+      <p class="card-text">${commObj.content}</p>
     </div>
   </div>
   `;
